@@ -1,0 +1,42 @@
+.App {
+  text-align: center;
+  height: 40rem;
+  width: 21rem;
+  /* border: 1px solid black; */
+  /* margin: 6% 40%; */
+}
+
+/* css design for making tic tac toe */
+.tic-tac-toe {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  /* grid-gap: 0.5rem; */
+  height: 18rem;
+  width: 100%;
+  /* border: 1px solid black; */
+  text-align: center;
+  margin: 2rem 0;
+}
+
+/* css design for making tic tac toe */
+.row {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  /* grid-gap: 0.5rem; */
+  /* height: 6.5rem; */
+  width: 100%;
+  /* border: 1px solid black; */
+}
+
+.col {
+  display: grid;
+  /* grid-template-columns: repeat(3, 1fr); */
+  grid-template-rows: repeat(3, 1fr);
+  /* grid-gap: 0.5rem; */
+  height: 6.5rem;
+  width: 100%;
+  border: 1px solid black;
+  text-align: center;
+  padding: 1.5rem;
+}
