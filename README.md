@@ -1,2 +1,3 @@
-# Tic-Tac-Toe
-Async Multiple Tic-Tac-Toe game
+->Problems
+  - facing issues in updating the board on both side user. 
+  
