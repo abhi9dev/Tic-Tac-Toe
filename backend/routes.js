@@ -3,7 +3,7 @@ const User = require("./Models/User");
 const router = express.Router();
 
 router.get("/api/getUsers", async (req, res) => {
-  const users = await User.find();
+  var users = await User.find({});
 
   try {
     res.status(200).send(users);
@@ -86,58 +86,40 @@ router.get("/api/getBoard/:user/:opponent", async (req, res) => {
 });
 
 //updating the given board data which is currently being played between user and opponent
-router.patch("/api/updateBoard/:user/:opponent", (req, res) => {
+router.patch("/api/updateBoard/:user/:opponent", async (req, res) => {
   var updatedBoard = req.body.board; //move played by one of the player
   var playerMove = req.body.turn;
 
   // console.log(playerMove);
 
   //updating user board
-  User.findOne({ userName: req.params.user }).then((user) => {
-    var games = user.games; // all games which are played by player user, or ongoing games.
-    // console.log(games);
-    user.games.map((game) => {
-      if (game.opponent == req.params.opponent && game.result == "playing") {
-        game.board = updatedBoard;
-        game.lastMove = Date();
-        game.lastTurn = playerMove;
-      }
-    });
+  var user1 = await User.findOne({ userName: req.params.user });
 
-    // user.save();
-    User.updateOne(
-      { userName: req.params.user },
-      { $set: { games: games } }
-    ).then((user) => {
-      res.send(user);
-    });
-
-    res.send("user board updated");
+  user1.games.map((game) => {
+    if (game.opponent == req.params.opponent && game.result == "playing") {
+      game.board = updatedBoard;
+      game.lastMove = Date();
+      game.lastTurn = playerMove;
+    }
   });
+
+  await user1.save();
+  res.send("user board updated");
 
   //updating opponent board
-  User.findOne({ userName: req.params.opponent }).then((user) => {
-    var games = user.games;
+  var user2 = await User.findOne({ userName: req.params.opponent });
 
-    user.games.map((game) => {
-      if (game.opponent == req.params.user && game.result == "playing") {
-        game.board = updatedBoard;
-        game.lastMove = Date();
-        game.lastTurn = playerMove;
-      }
-    });
-
-    // user.save();
-
-    User.updateOne(
-      { userName: req.params.opponent },
-      { $set: { games: games } }
-    ).then((user) => {
-      res.send(user);
-    });
-
-    res.send("opponent board updated");
+  user2.games.map((game) => {
+    if (game.opponent == req.params.user && game.result == "playing") {
+      game.board = updatedBoard;
+      game.lastMove = Date();
+      game.lastTurn = playerMove;
+      return;
+    }
   });
+
+  await user2.save();
+  res.send("opponent board updated");
 });
 
 module.exports = router;

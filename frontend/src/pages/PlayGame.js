@@ -150,7 +150,6 @@ const PlayGame = (props) => {
       ) : (
         <h1>Loading...</h1>
       )}
-      <Box></Box>
     </Paper>
   );
 };

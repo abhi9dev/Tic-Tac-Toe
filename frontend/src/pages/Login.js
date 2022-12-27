@@ -25,8 +25,8 @@ const Login = () => {
       // console.log(usersData);
 
       usersData.map((obj) => {
-        if (userName === obj.email) {
-          const hashed = hash.sha256().update(password).digest("hex");
+        if (userName === obj.userName) {
+          var hashed = hash.sha256().update(password).digest("hex");
           // console.log(hashed, obj.hashPass);
           if (hashed == obj.hashPass) {
             var strr = `/user/${obj.userName}`;
